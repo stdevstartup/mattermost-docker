@@ -10,8 +10,8 @@ services:
       - /etc/localtime:/etc/localtime:ro
     # uncomment the following to enable backup
     environment:
-      - MM_USERNAME=mmuser
-      - MM_PASSWORD=mmuser_password
+      - MM_USERNAME=root
+      - MM_PASSWORD=LinearAlgebraThroughComputerScienceApplications
       - MM_DBNAME=mattermost
     #  - AWS_ACCESS_KEY_ID=XXXX
     #  - AWS_SECRET_ACCESS_KEY=XXXX

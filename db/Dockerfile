@@ -1,19 +1,10 @@
-FROM postgres:9.4
+FROM mysql:5.7
 
-RUN apt-get update \
-    && apt-get install -y python-dev lzop pv daemontools curl build-essential \
-    && curl --silent --show-error --retry 5 https://bootstrap.pypa.io/get-pip.py | python \
-    && pip install 'wal-e<1.0.0' \
-    && apt-get remove -y build-essential python-dev \
-    && apt-get autoremove -y \
-    && apt-get clean \
-    && rm -rf /var/lib/apt/lists/* /tmp/* /var/tmp/*
-
-ADD make_db.sh /docker-entrypoint-initdb.d/
-ADD setup-wale.sh /docker-entrypoint-initdb.d/
-COPY docker-entrypoint1.sh /
-RUN chmod +x /docker-entrypoint1.sh
-
-ENTRYPOINT ["/docker-entrypoint1.sh"]
-
-CMD ["postgres"]
+RUN apt-get update && apt-get install -yq mecab libmecab-dev unzip curl g++ make && \
+curl -sSL -o /tmp/mecab-ko.tar.gz https://bitbucket.org/eunjeon/mecab-ko-dic/downloads/mecab-ko-dic-2.0.1-20150920.tar.gz && \
+cd /tmp/ && tar xvzf mecab-ko.tar.gz && cd mecab-ko-dic-2.0.1-20150920 && \
+./configure && make && make install && \
+echo "dicdir=/usr/lib/mecab/dic/mecab-ko-dic" > /etc/mecabrc && \
+echo "plugin-load=mecab=libpluginmecab.so" >> /etc/mysql/my.cnf && \
+echo "loose-mecab-rc-file=/etc/mecabrc" >> /etc/mysql/my.cnf && \
+echo "innodb_ft_min_token_size=1" >> /etc/mysql/my.cnf
