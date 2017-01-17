@@ -23,7 +23,7 @@
     },
     "SqlSettings": {
         "DriverName": "mysql",
-        "DataSource": "mysql://MM_USERNAME:MM_PASSWORD@DB_HOST:DB_PORT/MM_DBNAME?charset=utf8mb4,utf8",
+        "DataSource": "mysql://MM_USERNAME:MM_PASSWORD@tcp(DB_HOST:DB_PORT)/MM_DBNAME?charset=utf8mb4,utf8",
         "DataSourceReplicas": [],
         "MaxIdleConns": 20,
         "MaxOpenConns": 300,

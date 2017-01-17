@@ -13,6 +13,7 @@ services:
       - MM_USERNAME=root
       - MM_PASSWORD=LinearAlgebraThroughComputerScienceApplications
       - MM_DBNAME=mattermost
+      - MYSQL_ROOT_PASSWORD=LinearAlgebraThroughComputerScienceApplications
     #  - AWS_ACCESS_KEY_ID=XXXX
     #  - AWS_SECRET_ACCESS_KEY=XXXX
     #  - WALE_S3_PREFIX=s3://BUCKET_NAME/PATH
@@ -24,7 +25,10 @@ services:
     volumes:
       - ./volumes/app/mattermost/config:/mattermost/config:rw
       - ./volumes/app/mattermost/data:/mattermost/data:rw
+      - ./volumes/app/mattermost/logs:/mattermost/logs:rw
       - /etc/localtime:/etc/localtime:ro
+    links:
+      - db:db
 
   web:
     build: web
